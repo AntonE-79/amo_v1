@@ -6,7 +6,7 @@
     Object.assign(widgetContainer.style, {
         fontSize: '24px',
         fontWeight: 'normal',
-        color: '#333333',
+        color: '#ffffff',
         textAlign: 'center',
         padding: '20px',
         backgroundColor: '#f5f5f5',
