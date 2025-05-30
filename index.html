@@ -63,12 +63,12 @@
                 try {
                     // Делаем запрос к AMO CRM API
                     const dealsCount = await fetchAmoCrmDeals();
-                    resultBlock.innerHTML = `
+                    resultBlock.innerHTML = '
                         <strong>Статус ТП:</strong><br>
                         Всего сделок в CRM: <b>${dealsCount}</b>
-                    `;
+                    ';
                 } catch (error) {
-                    resultBlock.innerHTML = `<div class='error'>Ошибка: ${error.message}</div>`;
+                    resultBlock.innerHTML = "<div class='error'>Ошибка: ${error.message}</div>";
                 }
             }
         });
@@ -82,11 +82,11 @@
 
             // const url = `https://${DOMAIN}/api/v4/leads`;
             // const url = 'https://camerussia.amocrm.ru/api/v4/leads'
-            const url = `https://antone-79.github.io/amo_v1/`;
+            const url = 'https://antone-79.github.io/amo_v1/';
             const response = await fetch(url);
 
             if (!response.ok) {
-                throw new Error(`Ошибка HTTP: ${response.status}`);
+                throw new Error('Ошибка HTTP: ${response.status}');
             }
 
             const data = await response.json();
