@@ -1,14 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>JS Example</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выбор варианта</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        select {
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .selected-option {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            display: inline-block;
+        }
+    </style>
 </head>
 <body>
-    <button id="myButton">Нажми меня!</button>
+    <h2>Выберите тип:</h2>
     
+    <!-- Раскрывающееся меню -->
+    <select id="menu">
+        <option value="">-- Выберите --</option>
+        <option value="L1">L1</option>
+        <option value="TP">ТП</option>
+        <option value="Dealer">Дилер</option>
+    </select>
+    
+    <!-- Блок для отображения выбранного варианта -->
+    <div id="selected-option" class="selected-option"></div>
+
     <script>
-        document.getElementById("myButton").addEventListener("click", function() {
-            alert("Кнопка нажата!");
+        const menu = document.getElementById("menu");
+        const selectedOptionBlock = document.getElementById("selected-option");
+
+        menu.addEventListener("change", function() {
+            const selectedValue = this.value;
+            
+            if (selectedValue === "L1") {
+                selectedOptionBlock.textContent = "Выбрано: L1";
+            } else if (selectedValue === "TP") {
+                selectedOptionBlock.textContent = "Выбрано: ТП";
+            } else if (selectedValue === "Dealer") {
+                selectedOptionBlock.textContent = "Выбрано: Дилер";
+            } else {
+                selectedOptionBlock.textContent = "";
+            }
         });
     </script>
 </body>
