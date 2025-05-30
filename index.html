@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMO CRM - Анализ сделок</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        select {
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+        }
+        .loading {
+            color: #666;
+            font-style: italic;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h2>Выберите тип:</h2>
+    
+    <select id="menu">
+        <option value="">-- Выберите --</option>
+        <option value="L1">L1</option>
+        <option value="TP">ТП</option>
+        <option value="Dealer">Дилер</option>
+    </select>
+    
+    <div id="result" class="result"></div>
+
+    <script>
+        const menu = document.getElementById("menu");
+        const resultBlock = document.getElementById("result");
+
+        menu.addEventListener("change", async function() {
+            const selectedValue = this.value;
+            resultBlock.innerHTML = ""; // Очищаем предыдущий результат
+
+            if (selectedValue === "L1") {
+                resultBlock.textContent = "Выбрано: L1";
+            } 
+            else if (selectedValue === "Dealer") {
+                resultBlock.textContent = "Выбрано: Дилер";
+            }
+            else if (selectedValue === "TP") {
+                // Показываем загрузку
+                resultBlock.innerHTML = "<div class='loading'>Загрузка данных из AMO CRM...</div>";
+                
+                try {
+                    // Делаем запрос к AMO CRM API
+                    const dealsCount = await fetchAmoCrmDeals();
+                    resultBlock.innerHTML = `
+                        <strong>Статус ТП:</strong><br>
+                        Всего сделок в CRM: <b>${dealsCount}</b>
+                    `;
+                } catch (error) {
+                    resultBlock.innerHTML = `<div class='error'>Ошибка: ${error.message}</div>`;
+                }
+            }
+        });
+
+        // Функция для запроса к AMO CRM API
+        async function fetchAmoCrmDeals() {
+            // 🔴 Замените эти данные на свои!
+            const API_KEY = "ваш_api_ключ";
+            const DOMAIN = "ваш_домен.amocrm.ru";
+            const ACCESS_TOKEN = "ваш_access_token";
+
+            // const url = `https://${DOMAIN}/api/v4/leads`;
+            const url = 'https://camerussia.amocrm.ru//api/v4/leads'
+            const response = await fetch(url);
+
+            if (!response.ok) {
+                throw new Error(`Ошибка HTTP: ${response.status}`);
+            }
+
+            const data = await response.json();
+            return data._embedded.leads.length; // Возвращаем кол-во сделок
+        }
+    </script>
+</body>
+</html>
